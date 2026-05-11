@@ -1,11 +1,41 @@
 import type { Oklch } from './color';
 import { toCss, toHex, generateToneScale, TONE_STOPS } from './color';
 
-export type ExportFormat = 'tailwind' | 'css' | 'json' | 'scss' | 'svg';
+export type ExportFormat = 'tailwind' | 'css' | 'json' | 'scss' | 'svg' | 'tokens';
 
 function slug(name: string, fallback: string): string {
   const s = name.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   return s || fallback;
+}
+
+export function exportDesignTokens(
+  paletteName: string,
+  swatches: { name: string; color: Oklch }[],
+): string {
+  const tokens: Record<string, any> = {};
+
+  swatches.forEach(({ name, color }, i) => {
+    const key = slug(name, `c${i + 1}`);
+    const scale = generateToneScale(color);
+    const colorGroup: Record<string, any> = {};
+
+    TONE_STOPS.forEach((stop) => {
+      colorGroup[stop] = {
+        $value: toHex(scale[stop]),
+        $type: 'color'
+      };
+    });
+
+    tokens[key] = colorGroup;
+  });
+
+  return JSON.stringify({
+    metadata: {
+      name: paletteName,
+      generatedBy: 'Chroma Lab'
+    },
+    ...tokens
+  }, null, 2);
 }
 
 export function exportTailwind(
@@ -143,5 +173,6 @@ export function exportAll(
     case 'json': return exportJson(paletteName, swatches);
     case 'scss': return exportScss(paletteName, swatches);
     case 'svg': return exportSvg(paletteName, swatches);
+    case 'tokens': return exportDesignTokens(paletteName, swatches);
   }
 }

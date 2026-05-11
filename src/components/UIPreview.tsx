@@ -1,6 +1,6 @@
 import { Sparkles, ArrowRight, Zap, Bell, Activity, TrendingUp } from 'lucide-react';
 import { useStore } from '../store';
-import { bestTextColor, generateToneScale, toHex } from '../lib/color';
+import { bestTextColor, generateToneScale, toHex, getApcaContrast, getApcaRating } from '../lib/color';
 
 export function UIPreview() {
   const swatches = useStore((s) => s.swatches);
@@ -14,10 +14,14 @@ export function UIPreview() {
 
   const primaryScale = generateToneScale(primary);
   const surfaceScale = generateToneScale(surface);
+  
+  const textOnPrimary = bestTextColor(primary);
+  const contrastScore = getApcaContrast(textOnPrimary, primary);
+  const rating = getApcaRating(contrastScore);
 
   const styleVars: React.CSSProperties = {
     ['--p-primary' as string]: toHex(primary),
-    ['--p-primary-fg' as string]: toHex(bestTextColor(primary)),
+    ['--p-primary-fg' as string]: toHex(textOnPrimary),
     ['--p-secondary' as string]: toHex(secondary),
     ['--p-accent' as string]: toHex(accent),
     ['--p-surface' as string]: toHex(surfaceScale[50]),
@@ -164,9 +168,26 @@ export function UIPreview() {
             );
           })}
         </div>
-        <span className="block text-[10px] text-right mt-2" style={{ color: 'var(--p-fg-muted)' }}>
+
+        <span className="block text-[10px] text-left mt-4" style={{ color: 'var(--p-fg-muted)' }}>
           Surface uses tone <span className="font-mono">50</span> · Muted from <span className="font-mono">{toHex(muted).toUpperCase()}</span>
         </span>
+      </div>
+
+      {/* APCA Badge - Moved outside padding for better placement */}
+      <div className="absolute bottom-3 right-3 flex flex-col items-end gap-1 pointer-events-none z-10">
+        <div className="bg-white/90 dark:bg-black/80 backdrop-blur-sm border border-border p-2 rounded-lg shadow-pop flex items-center gap-3">
+          <div className="text-right">
+            <div className="text-[10px] text-fg-subtle font-semibold uppercase tracking-wider">APCA Contrast</div>
+            <div className="text-xs font-mono font-bold leading-none">{contrastScore} Lc</div>
+          </div>
+          <div className={`px-2 py-1 rounded text-[10px] font-bold ${Math.abs(contrastScore) >= 75 ? 'bg-success/20 text-success' : 'bg-warn/20 text-warn'}`}>
+            {rating.label}
+          </div>
+        </div>
+        <div className="text-[9px] text-fg-subtle italic bg-bg/50 px-1.5 py-0.5 rounded-full backdrop-blur-[2px]">
+          {rating.description}
+        </div>
       </div>
     </div>
   );

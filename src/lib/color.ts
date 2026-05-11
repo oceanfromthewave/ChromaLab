@@ -34,15 +34,21 @@ const TONE_LIGHTNESS: Record<ToneStop, number> = {
 };
 
 export function parseColor(input: string): Oklch | null {
-  const parsed = parse(input);
+  let str = input.trim();
+  // Support hex without '#' (3, 4, 6, or 8 digits)
+  if (/^([0-9a-fA-F]{3,4}){1,2}$/.test(str)) {
+    str = `#${str}`;
+  }
+  
+  const parsed = parse(str);
   if (!parsed) return null;
   const oklch = toOklch(parsed) as Oklch | undefined;
   if (!oklch) return null;
   return {
     mode: 'oklch',
-    l: oklch.l ?? 0,
-    c: oklch.c ?? 0,
-    h: oklch.h ?? 0,
+    l: typeof oklch.l === 'number' ? oklch.l : 0,
+    c: typeof oklch.c === 'number' ? oklch.c : 0,
+    h: typeof oklch.h === 'number' ? oklch.h : 0,
     alpha: oklch.alpha,
   };
 }
@@ -98,21 +104,27 @@ export function generateHarmony(base: Oklch, harmony: Harmony, count = 5): Oklch
   const result: Oklch[] = [base];
   switch (harmony) {
     case 'monochromatic': {
-      const offsets = [-0.22, -0.11, 0, 0.11, 0.22];
-      return offsets.map((o) =>
-        clampOklch({ ...base, l: clamp01(base.l + o), c: base.c * (1 - Math.abs(o) * 0.6) }),
+      const l = base.l;
+      const offsets = [0, -0.12, -0.25, 0.18, 0.35];
+      
+      return offsets.map((o) => 
+        clampOklch({ 
+          ...base, 
+          l: clamp01(l + o), 
+          c: base.c * (1 - Math.abs(o) * 0.2) 
+        })
       );
     }
     case 'analogous': {
-      // -30, -15, 0, +15, +30
-      const offsets = [-30, -15, 0, 15, 30];
+      // 0, -30, -15, +15, +30
+      const offsets = [0, -30, -15, 15, 30];
       return offsets.map((d) => rotateH(base, d));
     }
     case 'complementary': {
       const comp = rotateH(base, 180);
       return [
-        withL(base, clamp01(base.l + 0.18)),
         base,
+        withL(base, clamp01(base.l + 0.18)),
         withL(base, clamp01(base.l - 0.18)),
         comp,
         withL(comp, clamp01(comp.l - 0.18)),
@@ -123,8 +135,8 @@ export function generateHarmony(base: Oklch, harmony: Harmony, count = 5): Oklch
     }
     case 'triadic': {
       return [
-        withL(base, clamp01(base.l + 0.15)),
         base,
+        withL(base, clamp01(base.l + 0.15)),
         rotateH(base, 120),
         rotateH(base, 240),
         withL(rotateH(base, 240), clamp01(base.l - 0.18)),
@@ -141,8 +153,8 @@ export function generateHarmony(base: Oklch, harmony: Harmony, count = 5): Oklch
     }
     case 'compound': {
       return [
-        withL(base, clamp01(base.l + 0.16)),
         base,
+        withL(base, clamp01(base.l + 0.16)),
         rotateH(base, 30),
         rotateH(base, 195),
         rotateH(base, 165),
@@ -174,6 +186,49 @@ export function generateToneScale(base: Oklch): Record<ToneStop, Oklch> {
     });
   }
   return out;
+}
+
+/* ----------------------------- apca ---------------------------------- */
+
+/**
+ * APCA(Advanced Perceptual Contrast Algorithm) Lc calculation.
+ * A simplified version of the SAPC-8 formula.
+ */
+export function getApcaContrast(text: Oklch, bg: Oklch): number {
+  const rgbText = oklchToRgb255(text);
+  const rgbBg = oklchToRgb255(bg);
+
+  const toLinear = (v: number) => {
+    v /= 255;
+    return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+  };
+
+  const Yt = 0.2126729 * toLinear(rgbText.r) + 0.7151522 * toLinear(rgbText.g) + 0.072175 * toLinear(rgbText.b);
+  const Yb = 0.2126729 * toLinear(rgbBg.r) + 0.7151522 * toLinear(rgbBg.g) + 0.072175 * toLinear(rgbBg.b);
+
+  const sa0 = 1.1;
+  const tr0 = 0.8;
+
+  let Lc = 0;
+  if (Yb > Yt) {
+    Lc = (Math.pow(Yb, 0.56) - Math.pow(Yt, 0.57)) * 161.8;
+    Lc = Lc < tr0 ? 0 : Lc * sa0;
+  } else {
+    Lc = (Math.pow(Yb, 0.65) - Math.pow(Yt, 0.62)) * 161.8;
+    Lc = Lc > -tr0 ? 0 : Lc * sa0;
+  }
+
+  return Math.round(Lc);
+}
+
+export function getApcaRating(score: number): { label: string; description: string } {
+  const abs = Math.abs(score);
+  if (abs >= 90) return { label: 'Lc 90', description: 'Preferred (Body Text)' };
+  if (abs >= 75) return { label: 'Lc 75', description: 'Minimum (Body Text)' };
+  if (abs >= 60) return { label: 'Lc 60', description: 'Minimum (Content)' };
+  if (abs >= 45) return { label: 'Lc 45', description: 'Minimum (Large Text)' };
+  if (abs >= 30) return { label: 'Lc 30', description: 'Minimum (UI/Non-text)' };
+  return { label: 'Fail', description: 'Insufficient' };
 }
 
 /* --------------------------- helpers --------------------------------- */

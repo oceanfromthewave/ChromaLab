@@ -8,6 +8,7 @@ import { useToast } from '../hooks/useToast';
 const FORMATS: { id: ExportFormat; label: string; ext: string; lang: string }[] = [
   { id: 'tailwind', label: 'Tailwind config', ext: 'js', lang: 'js' },
   { id: 'css',      label: 'CSS variables',   ext: 'css', lang: 'css' },
+  { id: 'tokens',   label: 'Design Tokens',   ext: 'json', lang: 'json' },
   { id: 'scss',     label: 'SCSS map',        ext: 'scss', lang: 'scss' },
   { id: 'json',     label: 'JSON',            ext: 'json', lang: 'json' },
   { id: 'svg',      label: 'SVG card',        ext: 'svg', lang: 'svg' },

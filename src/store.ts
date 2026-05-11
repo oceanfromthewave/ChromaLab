@@ -67,7 +67,7 @@ function regenerate(base: Oklch, harmony: Harmony, existing: Swatch[]): Swatch[]
   // Keep locked swatches in their positions; replace unlocked ones in order.
   let genIdx = 0;
   const out: Swatch[] = [];
-  const targetLen = Math.max(existing.length, generated.length);
+  const targetLen = existing.length || 5;
   for (let i = 0; i < targetLen; i++) {
     const e = existing[i];
     if (e?.locked) {
@@ -77,7 +77,7 @@ function regenerate(base: Oklch, harmony: Harmony, existing: Swatch[]): Swatch[]
       out.push(e ? { ...e, color: c, name: nameSwatch(c) } : swatchFrom(c));
     }
   }
-  return out.slice(0, 5);
+  return out;
 }
 
 const initialBase = randomBase();

@@ -1,6 +1,6 @@
 import { Check, X, Minus } from 'lucide-react';
 import { useStore } from '../store';
-import { contrast, toHex, wcagLevel } from '../lib/color';
+import { contrast, getApcaContrast, getApcaRating, toHex, wcagLevel } from '../lib/color';
 
 const LEVEL_BADGE: Record<ReturnType<typeof wcagLevel>, { label: string; cls: string }> = {
   AAA:        { label: 'AAA',     cls: 'bg-success/15 text-success border-success/30' },
@@ -18,8 +18,8 @@ export function ContrastInspector() {
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
           <p className="text-sm text-fg-muted max-w-xl">
-            Pairwise WCAG contrast across the palette. <strong className="text-fg">AA</strong> requires
-            ≥ 4.5 for body text and ≥ 3 for large text; <strong className="text-fg">AAA</strong> requires ≥ 7.
+            Pairwise WCAG 2.1 and APCA contrast. <strong className="text-fg">AA</strong> requires
+            ≥ 4.5; <strong className="text-fg">APCA Lc 75</strong> is preferred for body text.
           </p>
         </div>
         <Legend />
@@ -77,6 +77,8 @@ export function ContrastInspector() {
                     const ratio = contrast(row.color, col.color);
                     const level = wcagLevel(ratio);
                     const badge = LEVEL_BADGE[level];
+                    const apcaScore = getApcaContrast(row.color, col.color);
+                    const apcaRating = getApcaRating(apcaScore);
                     return (
                       <td
                         key={col.id}
@@ -98,6 +100,15 @@ export function ContrastInspector() {
                           <span className={`text-[9px] font-semibold px-1.5 py-0.5 rounded border ${badge.cls}`}>
                             {badge.label}
                           </span>
+                          <div className="mt-1 pt-1 border-t border-border/50 w-full">
+                            <div className="text-[8px] text-fg-subtle font-bold uppercase">APCA</div>
+                            <div className="text-[10px] font-mono font-bold">
+                              {apcaScore}
+                            </div>
+                            <div className="text-[8px] text-fg-subtle">
+                              {apcaRating.label}
+                            </div>
+                          </div>
                         </div>
                       </td>
                     );
