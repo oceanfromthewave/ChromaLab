@@ -27,7 +27,7 @@ export function Header({ onOpenExport }: Props) {
 
   function copyShare() {
     const url = exportShareUrl();
-    navigator.clipboard.writeText(url).then(() => push('공유 링크가 복사됐습니다', 'success'));
+    navigator.clipboard.writeText(url).then(() => push('Share link copied', 'success'));
   }
 
   return (
@@ -60,7 +60,7 @@ export function Header({ onOpenExport }: Props) {
             <button
               onClick={() => { setDraft(paletteName); setEditing(true); }}
               className="text-sm font-medium text-fg-muted hover:text-fg transition-colors px-3 py-1 rounded-md hover:bg-bg-soft truncate max-w-[420px]"
-              title="팔레트 이름 변경"
+              title="Rename palette"
             >
               {paletteName}
             </button>
@@ -70,28 +70,28 @@ export function Header({ onOpenExport }: Props) {
         <div className="ml-auto flex items-center gap-1">
           <button
             className="btn-ghost"
-            onClick={() => { savePalette(); push('팔레트 저장됨', 'success'); }}
-            title="팔레트 저장 (⌘S)"
+            onClick={() => { savePalette(); push('Palette saved', 'success'); }}
+            title="Save palette (⌘S)"
           >
             <Save className="size-4" />
-            <span className="hidden sm:inline">저장</span>
+            <span className="hidden sm:inline">Save</span>
           </button>
-          <button className="btn-ghost" onClick={copyShare} title="공유 링크 복사 (C)">
+          <button className="btn-ghost" onClick={copyShare} title="Copy share link (C)">
             <Share2 className="size-4" />
-            <span className="hidden sm:inline">공유</span>
+            <span className="hidden sm:inline">Share</span>
           </button>
-          <button className="btn-primary" onClick={onOpenExport} title="내보내기">
+          <button className="btn-primary" onClick={onOpenExport} title="Export">
             <Download className="size-4" />
-            <span className="hidden sm:inline">내보내기</span>
+            <span className="hidden sm:inline">Export</span>
           </button>
           <div className="w-px h-5 bg-border mx-1" />
-          <button className="btn-ghost size-9 !p-0" onClick={toggleShortcuts} title="키보드 단축키 (?)">
+          <button className="btn-ghost size-9 !p-0" onClick={toggleShortcuts} title="Keyboard shortcuts (?)">
             <Keyboard className="size-4" />
           </button>
           <button
             className="btn-ghost size-9 !p-0"
             onClick={toggleTheme}
-            title={`${theme === 'dark' ? '라이트' : '다크'} 모드로 전환 (T)`}
+            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode (T)`}
           >
             {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
           </button>

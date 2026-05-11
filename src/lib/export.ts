@@ -21,8 +21,8 @@ export function exportTailwind(
     })
     .join('\n');
 
-  return `// Chroma Lab로 생성됨 — ${paletteName}
-// tailwind.config.js의 theme.extend.colors에 추가하세요
+  return `// Generated with Chroma Lab — ${paletteName}
+// Add this to tailwind.config.js → theme.extend.colors
 module.exports = {
   theme: {
     extend: {

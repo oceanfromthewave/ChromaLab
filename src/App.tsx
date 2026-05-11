@@ -33,7 +33,7 @@ function App() {
       <footer className="border-t border-border bg-bg-elev">
         <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 h-12 flex items-center justify-between text-[11px] text-fg-subtle">
           <div>
-            OKLCH 색 과학으로 만들었습니다. <kbd className="kbd">?</kbd> 를 눌러 단축키 보기.
+            Crafted with OKLCH color science. Press <kbd className="kbd">?</kbd> for shortcuts.
           </div>
           <div className="font-mono">Chroma Lab · v0.1</div>
         </div>

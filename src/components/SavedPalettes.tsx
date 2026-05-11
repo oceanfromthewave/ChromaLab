@@ -1,18 +1,8 @@
 import { Trash2, Bookmark } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '../store';
-import { toHex, type Harmony } from '../lib/color';
+import { toHex } from '../lib/color';
 import { useToast } from '../hooks/useToast';
-
-const HARMONY_KO: Record<Harmony, string> = {
-  monochromatic: '단색',
-  analogous: '유사색',
-  complementary: '보색',
-  'split-complementary': '분할보색',
-  triadic: '삼원색',
-  tetradic: '사각색',
-  compound: '복합',
-};
 
 export function SavedPalettes() {
   const saved = useStore((s) => s.saved);
@@ -25,15 +15,15 @@ export function SavedPalettes() {
     return (
       <div className="card p-8 text-center">
         <Bookmark className="size-8 text-fg-subtle mx-auto mb-3" />
-        <h3 className="font-medium text-fg mb-1">아직 저장된 팔레트가 없어요</h3>
+        <h3 className="font-medium text-fg mb-1">No saved palettes yet</h3>
         <p className="text-sm text-fg-muted max-w-sm mx-auto">
-          마음에 드는 팔레트는 <kbd className="kbd">⌘ S</kbd> 또는 헤더의 <strong className="text-fg">저장</strong> 버튼으로 보관하세요.
+          Hit <kbd className="kbd">⌘ S</kbd> or click <strong className="text-fg">Save</strong> in the header to keep palettes you love.
         </p>
         <button
           className="btn-outline mt-4 mx-auto"
-          onClick={() => { savePalette(); push('팔레트 저장됨', 'success'); }}
+          onClick={() => { savePalette(); push('Palette saved', 'success'); }}
         >
-          <Bookmark className="size-3.5" /> 현재 팔레트 저장
+          <Bookmark className="size-3.5" /> Save current palette
         </button>
       </div>
     );
@@ -55,7 +45,7 @@ export function SavedPalettes() {
             <button
               className="w-full block text-left"
               onClick={() => loadPalette(p.id)}
-              title="팔레트 불러오기"
+              title="Load palette"
             >
               <div className="h-20 flex">
                 {p.swatches.map((s) => (
@@ -70,13 +60,13 @@ export function SavedPalettes() {
                 <div className="min-w-0">
                   <div className="text-sm font-medium text-fg truncate">{p.name}</div>
                   <div className="text-[11px] text-fg-subtle">
-                    {p.swatches.length}색 · {HARMONY_KO[p.harmony] ?? p.harmony}
+                    {p.swatches.length} colors · {p.harmony}
                   </div>
                 </div>
                 <button
                   onClick={(e) => { e.stopPropagation(); deleteSaved(p.id); }}
                   className="opacity-0 group-hover:opacity-100 transition-opacity size-7 grid place-items-center rounded-md text-fg-subtle hover:text-danger hover:bg-danger/10"
-                  title="삭제"
+                  title="Delete"
                 >
                   <Trash2 className="size-3.5" />
                 </button>

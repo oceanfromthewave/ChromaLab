@@ -8,13 +8,13 @@ import { extractPalette } from '../lib/extract';
 import { useToast } from '../hooks/useToast';
 
 const HARMONY_LABEL: Record<typeof HARMONY_RULES[number], string> = {
-  monochromatic: '단색',
-  analogous: '유사색',
-  complementary: '보색',
-  'split-complementary': '분할보색',
-  triadic: '삼원색',
-  tetradic: '사각색',
-  compound: '복합',
+  monochromatic: 'Mono',
+  analogous: 'Analogous',
+  complementary: 'Complement',
+  'split-complementary': 'Split',
+  triadic: 'Triadic',
+  tetradic: 'Tetradic',
+  compound: 'Compound',
 };
 
 export function Toolbar() {
@@ -45,13 +45,13 @@ export function Toolbar() {
       try {
         const colors = await extractPalette(file, 6);
         if (colors.length === 0) {
-          push('색을 추출하지 못했습니다', 'error');
+          push('Could not extract colors', 'error');
           return;
         }
         setFromExtracted(colors);
-        push(`${colors.length}개 색을 추출했습니다`, 'success');
+        push(`Extracted ${colors.length} colors`, 'success');
       } catch {
-        push('이미지를 읽을 수 없습니다', 'error');
+        push('Failed to read image', 'error');
       } finally {
         setExtracting(false);
       }
@@ -88,13 +88,13 @@ export function Toolbar() {
         <div className="absolute inset-0 z-20 grid-bg bg-accent/5 flex items-center justify-center text-accent font-medium pointer-events-none">
           <div className="flex items-center gap-2">
             <ImageIcon className="size-5" />
-            이미지를 놓으면 팔레트를 추출합니다
+            Drop an image to extract a palette
           </div>
         </div>
       )}
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center gap-3">
         <div className="flex items-center gap-2">
-          <span className="text-[11px] uppercase tracking-wider font-semibold text-fg-subtle">색이론</span>
+          <span className="text-[11px] uppercase tracking-wider font-semibold text-fg-subtle">Harmony</span>
           <div className="flex items-center bg-bg-soft border border-border rounded-lg p-0.5 overflow-x-auto max-w-full hide-scrollbar">
             {HARMONY_RULES.map((h) => (
               <button
@@ -120,7 +120,7 @@ export function Toolbar() {
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-[11px] uppercase tracking-wider font-semibold text-fg-subtle">기준색</span>
+          <span className="text-[11px] uppercase tracking-wider font-semibold text-fg-subtle">Base</span>
           <label className="relative">
             <span
               className="absolute left-1.5 top-1/2 -translate-y-1/2 size-5 rounded-md border border-border-strong shadow-soft cursor-pointer"
@@ -148,20 +148,20 @@ export function Toolbar() {
         <div className="ml-auto flex items-center gap-2">
           <button onClick={open} className="btn-outline" disabled={extracting}>
             {extracting ? <Loader2 className="size-4 animate-spin" /> : <ImageIcon className="size-4" />}
-            <span className="hidden sm:inline">{extracting ? '추출 중…' : '이미지에서'}</span>
+            <span className="hidden sm:inline">{extracting ? 'Extracting…' : 'From image'}</span>
           </button>
           <button
             onClick={addSwatch}
             disabled={swatchesLen >= 8}
             className="btn-outline"
-            title="스왓치 추가"
+            title="Add swatch"
           >
             <Plus className="size-4" />
-            <span className="hidden sm:inline">추가</span>
+            <span className="hidden sm:inline">Add</span>
           </button>
-          <button onClick={shuffle} className="btn-primary group" title="섞기 (Space)">
+          <button onClick={shuffle} className="btn-primary group" title="Shuffle (Space)">
             <Sparkles className="size-4 group-hover:rotate-12 transition-transform" />
-            섞기
+            Shuffle
             <kbd className="hidden sm:inline-flex items-center justify-center min-w-[1rem] h-4 px-1 ml-1 text-[10px] font-mono font-semibold rounded bg-white/15 text-accent-fg">
               ␣
             </kbd>
