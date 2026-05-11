@@ -3,14 +3,14 @@ import { X } from 'lucide-react';
 import { useStore } from '../store';
 
 const SHORTCUTS: { keys: string[]; description: string }[] = [
-  { keys: ['Space'], description: 'Shuffle palette (locked colors stay)' },
-  { keys: ['L'], description: 'Lock / unlock selected swatch' },
-  { keys: ['T'], description: 'Toggle dark / light theme' },
-  { keys: ['I'], description: 'Toggle contrast inspector' },
-  { keys: ['C'], description: 'Copy a shareable URL' },
-  { keys: ['⌘', 'S'], description: 'Save palette' },
-  { keys: ['?'], description: 'Show this help' },
-  { keys: ['Esc'], description: 'Close any popover or dialog' },
+  { keys: ['Space'], description: '팔레트 섞기 (잠금된 색은 유지)' },
+  { keys: ['L'], description: '선택한 스왓치 잠금/해제' },
+  { keys: ['T'], description: '다크/라이트 테마 전환' },
+  { keys: ['I'], description: '대비 검사기 열기' },
+  { keys: ['C'], description: '공유 가능한 URL 복사' },
+  { keys: ['⌘', 'S'], description: '팔레트 저장' },
+  { keys: ['?'], description: '단축키 도움말 표시' },
+  { keys: ['Esc'], description: '팝오버/다이얼로그 닫기' },
 ];
 
 export function ShortcutsHelp() {
@@ -36,7 +36,7 @@ export function ShortcutsHelp() {
             className="card max-w-md w-full p-5 shadow-pop"
           >
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-base font-semibold text-fg">Keyboard shortcuts</h2>
+              <h2 className="text-base font-semibold text-fg">키보드 단축키</h2>
               <button onClick={toggleShortcuts} className="btn-ghost size-9 !p-0">
                 <X className="size-4" />
               </button>

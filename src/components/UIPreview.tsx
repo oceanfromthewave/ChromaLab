@@ -58,29 +58,29 @@ export function UIPreview() {
               style={{ backgroundColor: 'var(--p-tint)', color: 'var(--p-primary)' }}
             >
               <Sparkles className="size-3" />
-              <span>New release · v2.4</span>
+              <span>새 릴리스 · v2.4</span>
             </div>
             <h1
               className="text-2xl sm:text-3xl font-display font-semibold tracking-tight leading-tight"
               style={{ color: 'var(--p-fg)' }}
             >
-              Ship beautifully crafted product, faster.
+              더 잘 다듬은 제품을, 더 빠르게.
             </h1>
             <p className="text-sm leading-relaxed" style={{ color: 'var(--p-fg-muted)' }}>
-              A modern toolkit for product teams who care about details. Real components, real type, real color theory.
+              디테일에 진심인 팀을 위한 모던 툴킷. 실제 컴포넌트, 실제 타이포, 실제 색이론으로 만들어졌습니다.
             </p>
             <div className="flex items-center gap-2 pt-1">
               <button
                 className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-medium shadow-sm transition-transform hover:scale-[1.02] active:scale-[0.98]"
                 style={{ backgroundColor: 'var(--p-primary)', color: 'var(--p-primary-fg)' }}
               >
-                Get started <ArrowRight className="size-3.5" />
+                시작하기 <ArrowRight className="size-3.5" />
               </button>
               <button
                 className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-medium border transition-colors hover:opacity-80"
                 style={{ borderColor: 'var(--p-border)', color: 'var(--p-fg)', backgroundColor: 'transparent' }}
               >
-                Read docs
+                문서 보기
               </button>
             </div>
           </div>
@@ -99,7 +99,7 @@ export function UIPreview() {
                   <Activity className="size-3.5" />
                 </span>
                 <span className="text-xs font-medium" style={{ color: 'var(--p-fg-muted)' }}>
-                  Active users
+                  활성 사용자
                 </span>
               </div>
               <span
@@ -114,7 +114,7 @@ export function UIPreview() {
                 12,840
               </div>
               <div className="text-[11px]" style={{ color: 'var(--p-fg-muted)' }}>
-                vs. 11,422 last week
+                지난주 11,422 대비
               </div>
             </div>
             <Sparkline color={toHex(primary)} bg={toHex(primaryScale[100])} />
@@ -124,9 +124,9 @@ export function UIPreview() {
         {/* Feature row */}
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
           {[
-            { icon: Zap, title: 'Instant', body: 'Sub-second feedback loop' },
-            { icon: Bell, title: 'Notifications', body: 'Smart, never noisy' },
-            { icon: TrendingUp, title: 'Analytics', body: 'Built-in product insight' },
+            { icon: Zap, title: '즉시 반응', body: '1초 미만의 피드백 루프' },
+            { icon: Bell, title: '스마트 알림', body: '필요한 것만, 조용하게' },
+            { icon: TrendingUp, title: '분석', body: '내장된 제품 인사이트' },
           ].map(({ icon: Icon, title, body }) => (
             <div
               key={title}
@@ -159,13 +159,13 @@ export function UIPreview() {
                 className="text-[11px] font-medium px-2 py-1 rounded-full"
                 style={{ backgroundColor: toHex(s.color), color: fg }}
               >
-                Tag {i + 1}
+                태그 {i + 1}
               </span>
             );
           })}
         </div>
         <span className="block text-[10px] text-right mt-2" style={{ color: 'var(--p-fg-muted)' }}>
-          Surface uses tone <span className="font-mono">50</span> · Muted from <span className="font-mono">{toHex(muted).toUpperCase()}</span>
+          서피스는 톤 <span className="font-mono">50</span> 사용 · 무드는 <span className="font-mono">{toHex(muted).toUpperCase()}</span> 기반
         </span>
       </div>
     </div>

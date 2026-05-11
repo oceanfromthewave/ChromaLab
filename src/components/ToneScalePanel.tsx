@@ -12,7 +12,7 @@ export function ToneScalePanel() {
   function copy(value: string, key: string) {
     navigator.clipboard.writeText(value).then(() => {
       setCopiedKey(key);
-      push(`${value} copied`, 'success');
+      push(`${value} 복사됨`, 'success');
       setTimeout(() => setCopiedKey(null), 1000);
     });
   }
@@ -20,8 +20,8 @@ export function ToneScalePanel() {
   return (
     <div className="space-y-5">
       <p className="text-sm text-fg-muted">
-        Each base color is expanded into an <span className="font-mono text-fg">11-stop OKLCH tone scale</span> — drop-in
-        ready for Tailwind's color system. Click any swatch to copy.
+        각 기준색은 <span className="font-mono text-fg">11스탑 OKLCH 톤 스케일</span>로 확장됩니다. Tailwind 컬러 시스템에
+        그대로 꽂아 쓸 수 있어요. 스왓치를 클릭하면 HEX가 복사됩니다.
       </p>
       <div className="space-y-4">
         {swatches.map((s) => {

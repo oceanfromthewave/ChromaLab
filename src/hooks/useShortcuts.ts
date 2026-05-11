@@ -27,7 +27,7 @@ export function useShortcuts() {
         if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's') {
           e.preventDefault();
           savePalette();
-          push('Palette saved', 'success');
+          push('팔레트 저장됨', 'success');
           return;
         }
         return;
@@ -63,7 +63,7 @@ export function useShortcuts() {
         case 'C': {
           // Copy share URL
           const url = exportShareUrl();
-          navigator.clipboard.writeText(url).then(() => push('Share link copied', 'success'));
+          navigator.clipboard.writeText(url).then(() => push('공유 링크가 복사됐습니다', 'success'));
           break;
         }
       }

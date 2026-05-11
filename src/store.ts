@@ -90,7 +90,7 @@ export const useStore = create<State & Actions>()(
       swatches: initialSwatches,
       harmony: initialHarmony,
       selectedId: initialSwatches[0]?.id ?? null,
-      paletteName: 'Untitled palette',
+      paletteName: '이름 없는 팔레트',
       theme: 'dark',
       saved: [],
       showShortcuts: false,
@@ -156,7 +156,7 @@ export const useStore = create<State & Actions>()(
           swatches,
           selectedId: swatches[0].id,
           harmony: 'monochromatic',
-          paletteName: 'From image',
+          paletteName: '이미지에서 추출',
         });
       },
 
@@ -179,7 +179,7 @@ export const useStore = create<State & Actions>()(
         const { swatches, harmony, paletteName, saved } = get();
         const palette: SavedPalette = {
           id: makeId(),
-          name: paletteName || 'Untitled palette',
+          name: paletteName || '이름 없는 팔레트',
           swatches: swatches.map((s) => ({ ...s })),
           harmony,
           createdAt: Date.now(),
@@ -227,7 +227,7 @@ export const useStore = create<State & Actions>()(
           .filter((x): x is Oklch => x !== null);
         if (colors.length === 0) return false;
         const harmony = (params.get('h') as Harmony) || 'analogous';
-        const name = params.get('n') || 'Shared palette';
+        const name = params.get('n') || '공유된 팔레트';
         set({
           swatches: colors.map((c) => swatchFrom(c)),
           harmony,

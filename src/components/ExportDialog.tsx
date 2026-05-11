@@ -6,11 +6,11 @@ import { exportAll, type ExportFormat } from '../lib/export';
 import { useToast } from '../hooks/useToast';
 
 const FORMATS: { id: ExportFormat; label: string; ext: string; lang: string }[] = [
-  { id: 'tailwind', label: 'Tailwind config', ext: 'js', lang: 'js' },
-  { id: 'css',      label: 'CSS variables',   ext: 'css', lang: 'css' },
-  { id: 'scss',     label: 'SCSS map',        ext: 'scss', lang: 'scss' },
-  { id: 'json',     label: 'JSON',            ext: 'json', lang: 'json' },
-  { id: 'svg',      label: 'SVG card',        ext: 'svg', lang: 'svg' },
+  { id: 'tailwind', label: 'Tailwind 설정', ext: 'js', lang: 'js' },
+  { id: 'css',      label: 'CSS 변수',     ext: 'css', lang: 'css' },
+  { id: 'scss',     label: 'SCSS 맵',      ext: 'scss', lang: 'scss' },
+  { id: 'json',     label: 'JSON',         ext: 'json', lang: 'json' },
+  { id: 'svg',      label: 'SVG 카드',     ext: 'svg', lang: 'svg' },
 ];
 
 type Props = { open: boolean; onClose: () => void };
@@ -43,7 +43,7 @@ export function ExportDialog({ open, onClose }: Props) {
   function copyContent() {
     navigator.clipboard.writeText(content).then(() => {
       setCopied(true);
-      push('Copied to clipboard', 'success');
+      push('클립보드에 복사됐습니다', 'success');
       setTimeout(() => setCopied(false), 1300);
     });
   }
@@ -80,8 +80,8 @@ export function ExportDialog({ open, onClose }: Props) {
           >
             <div className="flex items-center justify-between px-5 py-3.5 border-b border-border">
               <div>
-                <h2 className="text-base font-semibold text-fg">Export palette</h2>
-                <p className="text-xs text-fg-subtle">{paletteName} · {swatches.length} colors</p>
+                <h2 className="text-base font-semibold text-fg">팔레트 내보내기</h2>
+                <p className="text-xs text-fg-subtle">{paletteName} · {swatches.length}색</p>
               </div>
               <button onClick={onClose} className="btn-ghost size-9 !p-0">
                 <X className="size-4" />
@@ -119,11 +119,11 @@ export function ExportDialog({ open, onClose }: Props) {
 
             <div className="flex items-center justify-end gap-2 px-5 py-3 border-t border-border">
               <button onClick={downloadContent} className="btn-outline">
-                <Download className="size-4" /> Download
+                <Download className="size-4" /> 다운로드
               </button>
               <button onClick={copyContent} className="btn-primary">
                 {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
-                {copied ? 'Copied' : 'Copy'}
+                {copied ? '복사됨' : '복사'}
               </button>
             </div>
           </motion.div>

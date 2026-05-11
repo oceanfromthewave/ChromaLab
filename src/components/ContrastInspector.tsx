@@ -3,10 +3,10 @@ import { useStore } from '../store';
 import { contrast, toHex, wcagLevel } from '../lib/color';
 
 const LEVEL_BADGE: Record<ReturnType<typeof wcagLevel>, { label: string; cls: string }> = {
-  AAA:        { label: 'AAA',     cls: 'bg-success/15 text-success border-success/30' },
-  AA:         { label: 'AA',      cls: 'bg-accent/15 text-accent border-accent/30' },
-  'AA-large': { label: 'AA Large', cls: 'bg-warn/15 text-warn border-warn/30' },
-  fail:       { label: 'Fail',    cls: 'bg-danger/12 text-danger border-danger/30' },
+  AAA:        { label: 'AAA',      cls: 'bg-success/15 text-success border-success/30' },
+  AA:         { label: 'AA',       cls: 'bg-accent/15 text-accent border-accent/30' },
+  'AA-large': { label: 'AA 대형',  cls: 'bg-warn/15 text-warn border-warn/30' },
+  fail:       { label: '미달',     cls: 'bg-danger/12 text-danger border-danger/30' },
 };
 
 export function ContrastInspector() {
@@ -18,8 +18,8 @@ export function ContrastInspector() {
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
           <p className="text-sm text-fg-muted max-w-xl">
-            Pairwise WCAG contrast across the palette. <strong className="text-fg">AA</strong> requires
-            ≥ 4.5 for body text and ≥ 3 for large text; <strong className="text-fg">AAA</strong> requires ≥ 7.
+            팔레트 내 모든 색 쌍의 WCAG 명도비입니다. <strong className="text-fg">AA</strong>는 본문 텍스트
+            ≥ 4.5, 대형 텍스트 ≥ 3, <strong className="text-fg">AAA</strong>는 ≥ 7을 만족해야 합니다.
           </p>
         </div>
         <Legend />
@@ -110,7 +110,7 @@ export function ContrastInspector() {
       </div>
 
       {n < 2 && (
-        <p className="text-sm text-fg-subtle">Add at least two colors to see contrast pairings.</p>
+        <p className="text-sm text-fg-subtle">대비 표를 보려면 두 색 이상을 추가하세요.</p>
       )}
     </div>
   );

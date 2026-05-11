@@ -8,10 +8,10 @@ import { SavedPalettes } from './SavedPalettes';
 import { useStore } from '../store';
 
 const TABS = [
-  { id: 'ui', label: 'UI Preview', icon: Layout },
-  { id: 'tone', label: 'Tone Scales', icon: Layers },
-  { id: 'contrast', label: 'Contrast', icon: ScanEye },
-  { id: 'saved', label: 'Saved', icon: Bookmark },
+  { id: 'ui', label: 'UI 미리보기', icon: Layout },
+  { id: 'tone', label: '톤 스케일', icon: Layers },
+  { id: 'contrast', label: '대비 검사', icon: ScanEye },
+  { id: 'saved', label: '저장됨', icon: Bookmark },
 ] as const;
 
 type TabId = (typeof TABS)[number]['id'];

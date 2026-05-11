@@ -56,7 +56,7 @@ export function ColorEditor({ color, onChange, onCommitHex, onClose }: Props) {
     >
       <div className="flex items-center justify-between mb-3">
         <span className="text-[11px] font-semibold uppercase tracking-wider text-fg-subtle">
-          Edit color
+          색 편집
         </span>
         <span className="text-[10px] font-mono text-fg-subtle">OKLCH</span>
       </div>
@@ -64,7 +64,7 @@ export function ColorEditor({ color, onChange, onCommitHex, onClose }: Props) {
       <div className="space-y-3.5">
         <Slider
           label="L"
-          help="Lightness"
+          help="밝기 (Lightness)"
           value={color.l}
           min={0}
           max={1}
@@ -74,7 +74,7 @@ export function ColorEditor({ color, onChange, onCommitHex, onClose }: Props) {
         />
         <Slider
           label="C"
-          help="Chroma"
+          help="채도 (Chroma)"
           value={color.c}
           min={0}
           max={0.4}
@@ -84,7 +84,7 @@ export function ColorEditor({ color, onChange, onCommitHex, onClose }: Props) {
         />
         <Slider
           label="H"
-          help="Hue"
+          help="색상 (Hue)"
           value={color.h}
           min={0}
           max={360}

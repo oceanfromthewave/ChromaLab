@@ -33,7 +33,7 @@ export function Swatch({ swatch, index }: Props) {
     e.stopPropagation();
     navigator.clipboard.writeText(hex.toUpperCase()).then(() => {
       setCopied(true);
-      push(`${hex.toUpperCase()} copied`, 'success');
+      push(`${hex.toUpperCase()} 복사됨`, 'success');
       setTimeout(() => setCopied(false), 1200);
     });
   }
@@ -67,7 +67,7 @@ export function Swatch({ swatch, index }: Props) {
           onClick={(e) => { e.stopPropagation(); setEditorOpen(true); }}
           fg={fgHex}
           isLight={isLightFg}
-          title="Edit color"
+          title="색 편집"
         >
           <Sliders className="size-3.5" />
         </IconBtn>
@@ -76,7 +76,7 @@ export function Swatch({ swatch, index }: Props) {
           fg={fgHex}
           isLight={isLightFg}
           active={swatch.locked}
-          title={swatch.locked ? 'Unlock (preserved on shuffle)' : 'Lock to keep on shuffle'}
+          title={swatch.locked ? '잠금 해제 (섞기에서 변경됨)' : '잠금 (섞기에서 유지)'}
         >
           {swatch.locked ? <Lock className="size-3.5" /> : <Unlock className="size-3.5" />}
         </IconBtn>
@@ -84,7 +84,7 @@ export function Swatch({ swatch, index }: Props) {
           onClick={(e) => { e.stopPropagation(); removeSwatch(swatch.id); }}
           fg={fgHex}
           isLight={isLightFg}
-          title="Remove"
+          title="삭제"
           disabled={swatchesLen <= 2}
         >
           <X className="size-3.5" />
@@ -100,7 +100,7 @@ export function Swatch({ swatch, index }: Props) {
             color: fgHex,
           }}
         >
-          <Lock className="size-2.5" /> LOCKED
+          <Lock className="size-2.5" /> 고정
         </div>
       )}
 
